@@ -17,8 +17,13 @@ public:
 
 private slots:
     //void on_insertButton_clicked();
+    //void on_bookletButton_clicked();
     void insertButtonClicked();
-    void on_bookletButton_clicked();
+    void bookletButtonClicked();
+    void clearButtonClicked();
+
+    void actionVyhledatTriggered();
+
 private:
     Ui::MainWindow *ui;
 };

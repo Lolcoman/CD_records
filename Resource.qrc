@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/rec">
+        <file>img/circle-xmark-solid.svg</file>
+        <file>img/file-circle-plus-solid.svg</file>
+        <file>img/magnifying-glass-solid.svg</file>
+        <file>img/circle-info-solid.svg</file>
+    </qresource>
+</RCC>

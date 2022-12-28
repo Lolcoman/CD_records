@@ -11,16 +11,22 @@ CONFIG += c++17
 SOURCES += \
     databasehelper.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    searchwindow.cpp
 
 HEADERS += \
     databasehelper.h \
-    mainwindow.h
+    mainwindow.h \
+    searchwindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    searchwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resource.qrc

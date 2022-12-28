@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>565</width>
+    <width>425</width>
     <height>377</height>
    </rect>
   </property>
@@ -14,136 +14,250 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Seznam skladeb</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Obal CD</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" colspan="2">
-         <widget class="QLineEdit" name="genreLineEdit"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Žánr</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QPushButton" name="bookletButton">
-          <property name="text">
-           <string>Vložit obrázek</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" colspan="2">
-         <widget class="QLineEdit" name="albumLineEdit"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Autor</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QLineEdit" name="autorLineEdit"/>
-        </item>
-        <item row="2" column="1" colspan="2">
-         <widget class="QLineEdit" name="yearLineEdit">
-          <property name="inputMethodHints">
-           <set>Qt::ImhNone</set>
-          </property>
-          <property name="maxLength">
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1" colspan="2">
-         <widget class="QLineEdit" name="playlistLineEdit"/>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="2">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Autor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="autorLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>50</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Album</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="albumLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="maxLength">
+             <number>50</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Rok</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="yearLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Musí být číslo</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhNone</set>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>32767</number>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <property name="cursorPosition">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Žánr</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="genreLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="maxLength">
+             <number>50</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Seznam skladeb</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="playlistLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="maxLength">
+             <number>50</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Obal CD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2" rowspan="2">
+           <widget class="QLabel" name="bookletLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>120</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>120</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+              <underline>false</underline>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>Zde se zobrazí obrázek obalu</string>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::WinPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <property name="text">
+             <string>Náhled</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="bookletButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Vložit obrázek</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Album</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Rok</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="bookletLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QPushButton" name="insertButton">
           <property name="minimumSize">
            <size>
-            <width>120</width>
-            <height>120</height>
+            <width>200</width>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>120</width>
-            <height>120</height>
+            <width>250</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="font">
            <font>
-            <italic>true</italic>
-            <underline>false</underline>
+            <bold>false</bold>
+            <strikeout>false</strikeout>
            </font>
           </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::WinPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
           <property name="text">
-           <string>Náhled</string>
+           <string>Přidat</string>
           </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="clearButton">
+          <property name="text">
+           <string>Znovu</string>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="insertButton">
-        <property name="text">
-         <string>Přidat</string>
-        </property>
-       </widget>
       </item>
       <item>
        <widget class="QLabel" name="statusLabel">
@@ -164,13 +278,67 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>565</width>
+     <width>425</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuVyhled_v_n">
+    <property name="title">
+     <string>Nahrávka</string>
+    </property>
+    <addaction name="actionP_idat"/>
+    <addaction name="actionVyhledat"/>
+   </widget>
+   <widget class="QMenu" name="menuProgram">
+    <property name="title">
+     <string>Program</string>
+    </property>
+    <addaction name="actionO_aplikaci"/>
+    <addaction name="actionZav_it"/>
+   </widget>
+   <addaction name="menuVyhled_v_n"/>
+   <addaction name="menuProgram"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionP_idat">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/file-circle-plus-solid.svg</normaloff>:/rec/img/file-circle-plus-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Přidat</string>
+   </property>
+  </action>
+  <action name="actionVyhledat">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/magnifying-glass-solid.svg</normaloff>:/rec/img/magnifying-glass-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Vyhledat</string>
+   </property>
+  </action>
+  <action name="actionO_aplikaci">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/circle-info-solid.svg</normaloff>:/rec/img/circle-info-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>O aplikaci</string>
+   </property>
+  </action>
+  <action name="actionZav_it">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/circle-xmark-solid.svg</normaloff>:/rec/img/circle-xmark-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zavřit</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
