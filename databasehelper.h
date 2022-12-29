@@ -5,8 +5,8 @@
 class DatabaseHelper
 {
 private:
-    QSqlDatabase database;
 public:
+    QSqlDatabase database;
     DatabaseHelper();
     bool Connect();
     void Dissconect();

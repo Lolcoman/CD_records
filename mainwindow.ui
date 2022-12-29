@@ -7,271 +7,58 @@
     <x>0</x>
     <y>0</y>
     <width>425</width>
-    <height>377</height>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0" colspan="2">
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Autor</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="autorLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="inputMask">
-             <string/>
-            </property>
-            <property name="maxLength">
-             <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Album</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="albumLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maxLength">
-             <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Rok</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="yearLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Musí být číslo</string>
-            </property>
-            <property name="inputMethodHints">
-             <set>Qt::ImhNone</set>
-            </property>
-            <property name="inputMask">
-             <string/>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="maxLength">
-             <number>32767</number>
-            </property>
-            <property name="frame">
-             <bool>true</bool>
-            </property>
-            <property name="cursorPosition">
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Žánr</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="genreLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maxLength">
-             <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Seznam skladeb</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="playlistLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maxLength">
-             <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Obal CD</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2" rowspan="2">
-           <widget class="QLabel" name="bookletLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-              <underline>false</underline>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>Zde se zobrazí obrázek obalu</string>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::WinPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Sunken</enum>
-            </property>
-            <property name="text">
-             <string>Náhled</string>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QPushButton" name="bookletButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Vložit obrázek</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="insertButton">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>250</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <bold>false</bold>
-            <strikeout>false</strikeout>
-           </font>
-          </property>
-          <property name="text">
-           <string>Přidat</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="clearButton">
-          <property name="text">
-           <string>Znovu</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QLabel" name="statusLabel">
-        <property name="text">
-         <string>Status</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>131</x>
+      <y>267</y>
+      <width>158</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="statusLabel">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Status</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -286,21 +73,36 @@
     <property name="title">
      <string>Nahrávka</string>
     </property>
-    <addaction name="actionP_idat"/>
-    <addaction name="actionVyhledat"/>
+    <addaction name="actionInsert"/>
+    <addaction name="actionSearch"/>
    </widget>
    <widget class="QMenu" name="menuProgram">
     <property name="title">
      <string>Program</string>
     </property>
-    <addaction name="actionO_aplikaci"/>
-    <addaction name="actionZav_it"/>
+    <addaction name="actionCreateDatabase"/>
+    <addaction name="actionLoadDatabase"/>
+    <addaction name="actionInfo"/>
+    <addaction name="actionClose"/>
    </widget>
-   <addaction name="menuVyhled_v_n"/>
    <addaction name="menuProgram"/>
+   <addaction name="menuVyhled_v_n"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionP_idat">
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionCreateDatabase"/>
+   <addaction name="actionLoadDatabase"/>
+  </widget>
+  <action name="actionInsert">
    <property name="icon">
     <iconset resource="Resource.qrc">
      <normaloff>:/rec/img/file-circle-plus-solid.svg</normaloff>:/rec/img/file-circle-plus-solid.svg</iconset>
@@ -309,7 +111,7 @@
     <string>Přidat</string>
    </property>
   </action>
-  <action name="actionVyhledat">
+  <action name="actionSearch">
    <property name="icon">
     <iconset resource="Resource.qrc">
      <normaloff>:/rec/img/magnifying-glass-solid.svg</normaloff>:/rec/img/magnifying-glass-solid.svg</iconset>
@@ -318,7 +120,7 @@
     <string>Vyhledat</string>
    </property>
   </action>
-  <action name="actionO_aplikaci">
+  <action name="actionInfo">
    <property name="icon">
     <iconset resource="Resource.qrc">
      <normaloff>:/rec/img/circle-info-solid.svg</normaloff>:/rec/img/circle-info-solid.svg</iconset>
@@ -327,13 +129,31 @@
     <string>O aplikaci</string>
    </property>
   </action>
-  <action name="actionZav_it">
+  <action name="actionClose">
    <property name="icon">
     <iconset resource="Resource.qrc">
      <normaloff>:/rec/img/circle-xmark-solid.svg</normaloff>:/rec/img/circle-xmark-solid.svg</iconset>
    </property>
    <property name="text">
     <string>Zavřit</string>
+   </property>
+  </action>
+  <action name="actionCreateDatabase">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/database-solid.svg</normaloff>:/rec/img/database-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Vytvořit databázi</string>
+   </property>
+  </action>
+  <action name="actionLoadDatabase">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/download-solid.svg</normaloff>:/rec/img/download-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Nahrát databázi</string>
    </property>
   </action>
  </widget>

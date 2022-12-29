@@ -7,6 +7,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class DatabaseData;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -16,15 +18,12 @@ public:
     ~MainWindow();
 
 private slots:
-    //void on_insertButton_clicked();
-    //void on_bookletButton_clicked();
-    void insertButtonClicked();
-    void bookletButtonClicked();
-    void clearButtonClicked();
-
-    void actionVyhledatTriggered();
-
+    void actionSearchTriggered();
+    void actionInsertTriggered();
+    void actionCreateTriggered();
+    void actionLoadTriggered();
 private:
     Ui::MainWindow *ui;
+    DatabaseData *sqlDatabase;
 };
 #endif // MAINWINDOW_H
