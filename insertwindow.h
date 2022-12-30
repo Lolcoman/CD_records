@@ -2,6 +2,7 @@
 #define INSERTWINDOW_H
 
 #include <QDialog>
+#include "record.h"
 
 namespace Ui {
 class InsertWindow;
@@ -14,12 +15,18 @@ class InsertWindow : public QDialog
 public:
     explicit InsertWindow(QWidget *parent = nullptr);
     ~InsertWindow();
+    Record record() const {return pRecord;}
+    //DatabaseData sqlDatabase;
 private slots:
-    void insertButtonClicked();
+    //void insertButtonClicked();
     void bookletButtonClicked();
-    void clearButtonClicked();
+    //void clearButtonClicked();
+    void buttonBoxAccepted();
+    void buttonBoxRejected();
+
 private:
     Ui::InsertWindow *ui;
+    Record pRecord;
 };
 
 #endif // INSERTWINDOW_H

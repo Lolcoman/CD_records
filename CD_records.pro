@@ -10,17 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     databasedata.cpp \
-    databasehelper.cpp \
+    imagedelegate.cpp \
     insertwindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    record.cpp \
     searchwindow.cpp
 
 HEADERS += \
     databasedata.h \
-    databasehelper.h \
+    imagedelegate.h \
     insertwindow.h \
     mainwindow.h \
+    record.h \
     searchwindow.h
 
 FORMS += \

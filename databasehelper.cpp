@@ -4,7 +4,6 @@ DatabaseHelper::DatabaseHelper()
 {
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName("C:/Users/Michal/Desktop/cd_DB.db");
-
 }
 
 bool DatabaseHelper::Connect()

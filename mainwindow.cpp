@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "databasehelper.h"
 #include "databasedata.h"
 #include <qsqldatabase.h>
 #include <QSqlQuery>
@@ -12,6 +11,8 @@
 #include "searchwindow.h"
 #include "insertwindow.h"
 #include <QSqlTableModel>
+#include <QStandardItemModel>
+#include "imagedelegate.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,26 +21,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     sqlDatabase = new DatabaseData(this);
     dataModel = nullptr;
+
+    ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->tableView->addActions({ui->actionInsert,ui->actionSearch});
+
+    ui->statusbar->addPermanentWidget(ui->statusLabel,3);
     setWindowTitle("Databáze CD nahrávek");
     //Action tlačítka a další dialogy
     connect(ui->actionSearch, &QAction::triggered, this, &MainWindow::actionSearchTriggered);
     connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
     connect(ui->actionCreateDatabase, &QAction::triggered, this, &MainWindow::actionCreateTriggered);
     connect(ui->actionLoadDatabase, &QAction::triggered, this, &MainWindow::actionLoadTriggered);
-
-    //Test připojení databáze
-    DatabaseHelper con;
-
-    if(con.Connect())
-    {
-        qDebug() << "Connected"<<Qt::endl;
-        ui->statusLabel->setText("Databáze je načtena");
-    }
-    else
-    {
-        ui->statusLabel->setText("Databáze není načtena");
-    }
-    con.Dissconect();
+    connect(ui->actionClose, &QAction::triggered, this, &MainWindow::actionCloseTriggered);
 }
 
 MainWindow::~MainWindow()
@@ -54,23 +47,44 @@ void MainWindow::actionSearchTriggered()
     search.exec();
 }
 
-
 void MainWindow::actionInsertTriggered()
 {
-    InsertWindow insert;
-    insert.setModal(true);
-    insert.exec();
+    //InsertWindow insert;
+    InsertWindow rec(this);
+    if(rec.exec() == QDialog::Rejected){
+        return;
+    }
+    //insert.setModal(true);
+    //insert.exec();
+
+    if(!sqlDatabase->insertRecord(rec.record())){
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError());
+        return;
+    }
+    if(dataModel){
+        dataModel->select();
+    }
 }
 
 void MainWindow::actionCreateTriggered()
 {
-    close();
+    createDatabase(NOTCREATED);
 }
 
 void MainWindow::actionLoadTriggered()
 {
-    //
-    auto newDatabase =  QFileDialog::getSaveFileName(this,"Nová databáze",QDir::rootPath(),"Databáze (*.db)");
+    createDatabase(CREATED);
+}
+
+void MainWindow::createDatabase(Database database)
+{
+    QString newDatabase;
+    //Pokud je již vytvořená
+    if(database == CREATED){
+        newDatabase =  QFileDialog::getOpenFileName(this,"Vytvořená databáze",QDir::rootPath(),"Databáze (*.db)");
+    }else{ //Pokud se teprve vytváří
+        newDatabase =  QFileDialog::getSaveFileName(this,"Nová databáze",QDir::rootPath(),"Databáze (*.db)");
+    }
     if(newDatabase.isEmpty()){
         return;
     }
@@ -83,5 +97,34 @@ void MainWindow::actionLoadTriggered()
     }
     delete dataModel;
     dataModel = new QSqlTableModel(this);
-    dataModel->setTable("Model");
+    pImageDelegate = new ImageDelegate(this);
+    dataModel->setTable("cd_table"); //název tabulky
+    dataModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    dataModel->select();
+    dataModel->setHeaderData(0, Qt::Horizontal, tr("Autor"));
+    dataModel->setHeaderData(1, Qt::Horizontal, tr("Album"));
+    dataModel->setHeaderData(2, Qt::Horizontal, tr("Rok vydání alba"));
+    dataModel->setHeaderData(3, Qt::Horizontal, tr("Žánr"));
+    dataModel->setHeaderData(4, Qt::Horizontal, tr("Playlist"));
+    dataModel->setHeaderData(5, Qt::Horizontal, tr("Obal CD"));
+    //qDebug()<<dataModel->index(0,5).data().toByteArray();
+
+    QByteArray img = dataModel->index(0,5).data().toByteArray();
+    QPixmap outPixmap = QPixmap();
+    outPixmap.loadFromData( img );
+    //dataModel->(0, 0, outPixmap);
+    //qDebug()<<img;
+    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+
+
+    ui->tableView->setModel(dataModel);
+    ui->tableView->setItemDelegateForColumn(5,pImageDelegate);
+    //ui->tableView->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
 }
+
+void MainWindow::actionCloseTriggered()
+{
+    close();
+}
+

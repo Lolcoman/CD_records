@@ -6,66 +6,89 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>379</height>
+    <width>550</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>131</x>
-      <y>267</y>
-      <width>158</width>
-      <height>48</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="statusLabel">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Status</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTableView" name="tableView">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>80</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>80</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>80</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>80</number>
+        </attribute>
+        <attribute name="verticalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="statusLabel">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Databáze není načtena!</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>425</width>
+     <width>550</width>
      <height>22</height>
     </rect>
    </property>
@@ -73,8 +96,8 @@
     <property name="title">
      <string>Nahrávka</string>
     </property>
-    <addaction name="actionInsert"/>
     <addaction name="actionSearch"/>
+    <addaction name="actionInsert"/>
    </widget>
    <widget class="QMenu" name="menuProgram">
     <property name="title">
@@ -83,12 +106,10 @@
     <addaction name="actionCreateDatabase"/>
     <addaction name="actionLoadDatabase"/>
     <addaction name="actionInfo"/>
-    <addaction name="actionClose"/>
    </widget>
    <addaction name="menuProgram"/>
    <addaction name="menuVyhled_v_n"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -101,7 +122,10 @@
    </attribute>
    <addaction name="actionCreateDatabase"/>
    <addaction name="actionLoadDatabase"/>
+   <addaction name="separator"/>
+   <addaction name="actionClose"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionInsert">
    <property name="icon">
     <iconset resource="Resource.qrc">

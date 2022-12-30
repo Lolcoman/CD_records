@@ -14,7 +14,6 @@ DatabaseData::DatabaseData(QObject *parent)
     : QObject{parent}
 {
 }
-
 //Inicializace databáze
 bool DatabaseData::initDatabase(const QString &database)
 {
@@ -33,6 +32,23 @@ bool DatabaseData::configDatabase()
     bool success = query.exec(CREATE_TABLE);
     if(!success){
         DatabaseError = query.lastError().text();
+    }
+    return success;
+}
+
+bool DatabaseData::insertRecord(const Record &record)
+{
+    QSqlQuery qry;
+    qry.prepare("INSERT INTO cd_table (Author,Album,AlbumYear,MusicGenre,Playlist,Booklet) VALUES (?,?,?,?,?,?)");
+    qry.addBindValue(record.Author());
+    qry.addBindValue(record.Album());
+    qry.addBindValue(record.AlbumYear());
+    qry.addBindValue(record.MusicGenre());
+    qry.addBindValue(record.Playlist());
+    qry.addBindValue(record.Booklet());
+    bool success = qry.exec();
+    if(!success){
+        DatabaseError = qry.lastError().text();
     }
     return success;
 }

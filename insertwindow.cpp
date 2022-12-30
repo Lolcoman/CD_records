@@ -2,7 +2,6 @@
 #include "ui_insertwindow.h"
 #include <QRegularExpressionValidator>
 #include <QMessageBox>
-#include "databasehelper.h"
 #include <qsqldatabase.h>
 #include <QSqlQuery>
 #include <QFileDialog>
@@ -15,15 +14,18 @@ InsertWindow::InsertWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("Přidání CD nahrávky");
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Přidat");
+    ui->buttonBox->button(QDialogButtonBox::Retry)->setText("Znovu");
+    //sqlDatabase = new DatabaseData(this);
     //Normální tlačíka
-    connect(ui->insertButton, &QPushButton::clicked, this, &InsertWindow::insertButtonClicked);
     connect(ui->bookletButton, &QPushButton::clicked, this, &InsertWindow::bookletButtonClicked);
-    connect(ui->clearButton, &QPushButton::clicked, this, &InsertWindow::clearButtonClicked);
+    //ButtoBox dialog tlačíka
+    connect(ui->buttonBox->button(QDialogButtonBox::Ok),SIGNAL(clicked(bool)), this, SLOT(buttonBoxAccepted()));
+    connect(ui->buttonBox->button(QDialogButtonBox::Retry),SIGNAL(clicked(bool)), this, SLOT(buttonBoxRejected()));
     //Regex validátor pro roky
     QRegularExpression rx("[1-2][0-9][0-9][0-9]");
     QValidator *validator = new QRegularExpressionValidator(rx, this);
     ui->yearLineEdit->setValidator(validator);
-
 }
 
 InsertWindow::~InsertWindow()
@@ -31,6 +33,7 @@ InsertWindow::~InsertWindow()
     delete ui;
 }
 
+/*
 void InsertWindow::insertButtonClicked()
 {
     QString author = ui->autorLineEdit->text();
@@ -38,7 +41,7 @@ void InsertWindow::insertButtonClicked()
     QString year = ui->yearLineEdit->text();
     QString genre = ui->genreLineEdit->text();
     QString playlist = ui->playlistLineEdit->text();
-    //QString booklet = ui->bookletLabel->text();
+    QFile booklet = ui->imageLineEdit->text();
     QStringList items;
     items << author;
     items << album;
@@ -61,19 +64,26 @@ void InsertWindow::insertButtonClicked()
     QByteArray arr;
     QBuffer inBuffer(&arr);
     inBuffer.open( QIODevice::WriteOnly );
-    inPixmap.save( &inBuffer, "BMP" );
+    inPixmap.save( &inBuffer,"BMP");
 
-    DatabaseHelper database;
-
-    if(database.Connect())
-    {
-        qDebug() << "Connected" << Qt::endl;
+    if(!booklet.open(QIODevice::ReadOnly)){
+        return;
     }
+    pRecord = Record(author,album,year,genre,playlist,arr);
+    booklet.close();
+
+
+
+
+    //if(sqlDatabase.Connect())
+    //{
+      //  qDebug() << "Connected" << Qt::endl;
+    //}
 
     QSqlQuery query;
-    query.prepare("INSERT INTO cd_table (Author,Album,AlbumYear,MusicGenre,Playlist,Booklet) VALUES ('"+author+"','"+album+"','"+year+"','"+genre+"','"+playlist+"',:arr)");
+    query.prepare("INSERT INTO cd_table (Autor,Album,Rok_vydání_alba,Žánr,Playlist,Obal_CD) VALUES ('"+author+"','"+album+"','"+year+"','"+genre+"','"+playlist+"',:arr)");
     query.bindValue( ":arr", arr );
-     if(query.exec())
+    if(query.exec())
     {
         qDebug() << "Query success" << Qt::endl;
         QMessageBox messageBox;
@@ -85,17 +95,21 @@ void InsertWindow::insertButtonClicked()
     }
 
 
-    database.Dissconect();
+    //sqlDatabase.Dissconect();
 }
+*/
+//Tlačítko pro vybrání obrázku a zobrazení náhledu
 void InsertWindow::bookletButtonClicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,tr("Vyberte obrázek"),"",tr("Obrázky (*.png *.jpg *.jpeg, *bmp)"));
-
+    if(filename.isEmpty()){
+        return;
+    }
     //Pokud nebylo nic vybráno
     if(QString::compare(filename, QString()) != 0)
     {
         QImage image;
-        QByteArray arr;
+        //QByteArray arr;
         bool valid = image.load(filename);
         //Pokud je soubor poškozený
         if(valid)
@@ -104,9 +118,9 @@ void InsertWindow::bookletButtonClicked()
             ui->bookletLabel->setPixmap(QPixmap::fromImage(image));
 
             //ui->bookletLabel->setPixmap(QPixmap::fromImage(image).scaled(w,h,Qt::KeepAspectRatio));
-            QBuffer buffer(&arr);
-            buffer.open(QIODevice::WriteOnly);
-            image.save(&buffer, "BMP");
+            //QBuffer buffer(&arr);
+            //buffer.open(QIODevice::WriteOnly);
+            //image.save(&buffer,"BMP");
         }
         else
         {
@@ -115,8 +129,44 @@ void InsertWindow::bookletButtonClicked()
     }
 }
 
+void InsertWindow::buttonBoxAccepted()
+{
+    QString author = ui->autorLineEdit->text();
+    QString album = ui->albumLineEdit->text();
+    QString year = ui->yearLineEdit->text();
+    QString genre = ui->genreLineEdit->text();
+    QString playlist = ui->playlistLineEdit->text();
+    QStringList items;
+    items << author;
+    items << album;
+    items << year;
+    items << genre;
+    items << playlist;
+    items.removeAll(QString(""));
+    if(items.length() < 5)
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Chyba","Vyplňte všecha pole !");
+        return;
+    }
+    for(int i=0 ; i < items.length() ; i++){
+        qDebug() << items.at(i) << Qt::endl;
+    }
+    //Převod z labelu na obrázek a uložení do DB
+    //ZDE MUSÍ BÝT JEŠTĚ OŠTĚŘENÍ ZDA UŽIVATEL VŮBEC NAHRÁL OBRÁZEK!
+    QPixmap inPixmap = ui->bookletLabel->pixmap();
+    QPixmap afterScaled = inPixmap.scaled(QSize(80, 80),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+    QByteArray arr;
+    QBuffer inBuffer(&arr);
+    inBuffer.open( QIODevice::WriteOnly );
+    afterScaled.save( &inBuffer,"BMP");
 
-void InsertWindow::clearButtonClicked()
+    pRecord = Record(author,album,year,genre,playlist,arr);
+    accept();
+}
+
+
+void InsertWindow::buttonBoxRejected()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Znovu", "Opravdu chcete všechna pole vymazat?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
@@ -132,3 +182,4 @@ void InsertWindow::clearButtonClicked()
         return;
       }
 }
+
