@@ -5,13 +5,14 @@
 
 class Record
 {
+//Inicializace prázdných proměných v konstruktoru
 public:
-    Record(const QString &Author = "",
-           const QString &Album ="",
-           const QString &AlbumYear = "",
+    Record(const QString &Author="",
+           const QString &Album="",
+           const QString &AlbumYear="",
            const QString &MusicGenre="",
            const QString &Playlist="",
-           const QByteArray &Booklet = QByteArray());
+           const QByteArray &Booklet=QByteArray());
     QString Author()const{return pAuthor;}
     QString Album()const{return pAlbum;}
     QString AlbumYear()const{return pAlbumYear;}

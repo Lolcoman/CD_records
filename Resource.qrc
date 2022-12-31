@@ -6,5 +6,6 @@
         <file>img/circle-info-solid.svg</file>
         <file>img/database-solid.svg</file>
         <file>img/download-solid.svg</file>
+        <file>img/folder-open-solid.svg</file>
     </qresource>
 </RCC>

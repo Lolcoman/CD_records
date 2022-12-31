@@ -16,13 +16,14 @@ InsertWindow::InsertWindow(QWidget *parent) :
     setWindowTitle("Přidání CD nahrávky");
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Přidat");
     ui->buttonBox->button(QDialogButtonBox::Retry)->setText("Znovu");
-    //sqlDatabase = new DatabaseData(this);
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("Zrušit");
     //Normální tlačíka
     connect(ui->bookletButton, &QPushButton::clicked, this, &InsertWindow::bookletButtonClicked);
     //ButtoBox dialog tlačíka
     connect(ui->buttonBox->button(QDialogButtonBox::Ok),SIGNAL(clicked(bool)), this, SLOT(buttonBoxAccepted()));
-    connect(ui->buttonBox->button(QDialogButtonBox::Retry),SIGNAL(clicked(bool)), this, SLOT(buttonBoxRejected()));
-    //Regex validátor pro roky
+    connect(ui->buttonBox->button(QDialogButtonBox::Retry),SIGNAL(clicked(bool)), this, SLOT(buttonBoxRetry()));
+    connect(ui->buttonBox->button(QDialogButtonBox::Cancel),SIGNAL(clicked(bool)), this, SLOT(buttonBoxRejected()));
+    //Regex validátor roků
     QRegularExpression rx("[1-2][0-9][0-9][0-9]");
     QValidator *validator = new QRegularExpressionValidator(rx, this);
     ui->yearLineEdit->setValidator(validator);
@@ -101,34 +102,19 @@ void InsertWindow::insertButtonClicked()
 //Tlačítko pro vybrání obrázku a zobrazení náhledu
 void InsertWindow::bookletButtonClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,tr("Vyberte obrázek"),"",tr("Obrázky (*.png *.jpg *.jpeg, *bmp)"));
+    QString filename = QFileDialog::getOpenFileName(this,tr("Vyberte obrázek"),"",tr("Obrázky (*.png *.jpg *.jpeg *.bmp)"));
     if(filename.isEmpty()){
         return;
-    }
-    //Pokud nebylo nic vybráno
-    if(QString::compare(filename, QString()) != 0)
-    {
+    }else{
         QImage image;
-        //QByteArray arr;
         bool valid = image.load(filename);
-        //Pokud je soubor poškozený
-        if(valid)
-        {
-            //image = image.scaledToWidth(ui->bookletLabel->width(),Qt::SmoothTransformation);
+        if(valid){
             ui->bookletLabel->setPixmap(QPixmap::fromImage(image));
-
-            //ui->bookletLabel->setPixmap(QPixmap::fromImage(image).scaled(w,h,Qt::KeepAspectRatio));
-            //QBuffer buffer(&arr);
-            //buffer.open(QIODevice::WriteOnly);
-            //image.save(&buffer,"BMP");
-        }
-        else
-        {
-
         }
     }
-}
 
+}
+//Tlačítko pro přidání záznamu
 void InsertWindow::buttonBoxAccepted()
 {
     QString author = ui->autorLineEdit->text();
@@ -166,7 +152,7 @@ void InsertWindow::buttonBoxAccepted()
 }
 
 
-void InsertWindow::buttonBoxRejected()
+void InsertWindow::buttonBoxRetry()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Znovu", "Opravdu chcete všechna pole vymazat?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
@@ -178,8 +164,12 @@ void InsertWindow::buttonBoxRejected()
         ui->genreLineEdit->clear();
         ui->playlistLineEdit->clear();
         ui->bookletLabel->setText("Náhled");
-      } else {
+    } else {
         return;
-      }
+    }
+    //reject();
 }
-
+void InsertWindow::buttonBoxRejected()
+{
+    reject();
+}

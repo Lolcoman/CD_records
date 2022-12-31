@@ -25,7 +25,7 @@ bool DatabaseData::initDatabase(const QString &database)
     }
     return success;
 }
-//vytvoření databáze, const
+//Konfigurace nové databáze
 bool DatabaseData::configDatabase()
 {
     QSqlQuery query;
@@ -35,7 +35,7 @@ bool DatabaseData::configDatabase()
     }
     return success;
 }
-
+//Vložení nahrávky do databáze, třída se stará o práci s db, Query je zde
 bool DatabaseData::insertRecord(const Record &record)
 {
     QSqlQuery qry;
@@ -51,4 +51,15 @@ bool DatabaseData::insertRecord(const Record &record)
         DatabaseError = qry.lastError().text();
     }
     return success;
+}
+//Oveření zda byla databáze načtena
+bool DatabaseData::checkConnection()
+{
+    bool success = sqlDatabase.open();
+    if(success){
+        return true;
+    }
+    else{
+        return false;
+    }
 }

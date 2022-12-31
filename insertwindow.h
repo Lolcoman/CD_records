@@ -16,14 +16,11 @@ public:
     explicit InsertWindow(QWidget *parent = nullptr);
     ~InsertWindow();
     Record record() const {return pRecord;}
-    //DatabaseData sqlDatabase;
-private slots:
-    //void insertButtonClicked();
+private slots:;
     void bookletButtonClicked();
-    //void clearButtonClicked();
     void buttonBoxAccepted();
     void buttonBoxRejected();
-
+    void buttonBoxRetry();
 private:
     Ui::InsertWindow *ui;
     Record pRecord;

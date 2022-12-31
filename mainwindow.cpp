@@ -51,14 +51,18 @@ void MainWindow::actionInsertTriggered()
 {
     //InsertWindow insert;
     InsertWindow rec(this);
+    //insert.setModal(true);
+    //insert.exec();
+    if(!sqlDatabase->checkConnection()){
+        QMessageBox::critical(this,"Chyba","Vyberte databázi!");
+        return;
+    }
     if(rec.exec() == QDialog::Rejected){
         return;
     }
-    //insert.setModal(true);
-    //insert.exec();
-
+    //Podmínka zda došlo k vložení záznamu do databáze
     if(!sqlDatabase->insertRecord(rec.record())){
-        QMessageBox::critical(this,"Chyba",sqlDatabase->getError());
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError()+"\nVyberte databázi!");
         return;
     }
     if(dataModel){
@@ -69,11 +73,17 @@ void MainWindow::actionInsertTriggered()
 void MainWindow::actionCreateTriggered()
 {
     createDatabase(NOTCREATED);
+    if(sqlDatabase->checkConnection()){
+        ui->statusLabel->setText("Databáze je načtena");
+    }
 }
 
 void MainWindow::actionLoadTriggered()
 {
     createDatabase(CREATED);
+    if(sqlDatabase->checkConnection()){
+        ui->statusLabel->setText("Databáze je načtena");
+    }
 }
 
 void MainWindow::createDatabase(Database database)

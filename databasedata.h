@@ -13,9 +13,10 @@ public:
     //veřejné metody
     explicit DatabaseData(QObject *parent = nullptr);
     bool initDatabase(const QString &database);
-    bool configDatabase(); //const
-    QString getError() const {return DatabaseError;}
+    bool configDatabase();
     bool insertRecord(const Record &record);
+    bool checkConnection();
+    QString getError() const {return DatabaseError;}
 private:
     QSqlDatabase sqlDatabase;
     QString DatabaseError;
