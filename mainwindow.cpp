@@ -42,9 +42,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::actionSearchTriggered()
 {
+    SearchWindow ser(this);
+
     SearchWindow search;
-    search.setModal(true);
-    search.exec();
+//    if(!sqlDatabase->checkConnection()){
+//        QMessageBox::critical(this,"Chyba","Vyberte databázi!");
+//        return;
+//    }
+    if(ser.exec() == QDialog::Rejected){
+        return;
+    }
+    if(!sqlDatabase->insertRecord(ser.record())){
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError()+"\nVyberte databázi!");
+        return;
+    }
+    if(dataModel){
+        dataModel->select();
+    }
 }
 
 void MainWindow::actionInsertTriggered()

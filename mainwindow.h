@@ -16,7 +16,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    void checkConnectionDatabase();
     enum Database
     {
         CREATED,

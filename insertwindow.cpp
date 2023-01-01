@@ -34,71 +34,6 @@ InsertWindow::~InsertWindow()
     delete ui;
 }
 
-/*
-void InsertWindow::insertButtonClicked()
-{
-    QString author = ui->autorLineEdit->text();
-    QString album = ui->albumLineEdit->text();
-    QString year = ui->yearLineEdit->text();
-    QString genre = ui->genreLineEdit->text();
-    QString playlist = ui->playlistLineEdit->text();
-    QFile booklet = ui->imageLineEdit->text();
-    QStringList items;
-    items << author;
-    items << album;
-    items << year;
-    items << genre;
-    items << playlist;
-    items.removeAll(QString(""));
-    if(items.length() < 5)
-    {
-        QMessageBox messageBox;
-        messageBox.critical(0,"Chyba","Vyplňte všecha pole !");
-        return;
-    }
-    for(int i=0 ; i < items.length() ; i++){
-        qDebug() << items.at(i) << Qt::endl;
-    }
-    //Převod z labelu na obrázek a uložení do DB
-    //ZDE MUSÍ BÝT JEŠTĚ OŠTĚŘENÍ ZDA UŽIVATEL VŮBEC NAHRÁL OBRÁZEK!
-    QPixmap inPixmap = ui->bookletLabel->pixmap();
-    QByteArray arr;
-    QBuffer inBuffer(&arr);
-    inBuffer.open( QIODevice::WriteOnly );
-    inPixmap.save( &inBuffer,"BMP");
-
-    if(!booklet.open(QIODevice::ReadOnly)){
-        return;
-    }
-    pRecord = Record(author,album,year,genre,playlist,arr);
-    booklet.close();
-
-
-
-
-    //if(sqlDatabase.Connect())
-    //{
-      //  qDebug() << "Connected" << Qt::endl;
-    //}
-
-    QSqlQuery query;
-    query.prepare("INSERT INTO cd_table (Autor,Album,Rok_vydání_alba,Žánr,Playlist,Obal_CD) VALUES ('"+author+"','"+album+"','"+year+"','"+genre+"','"+playlist+"',:arr)");
-    query.bindValue( ":arr", arr );
-    if(query.exec())
-    {
-        qDebug() << "Query success" << Qt::endl;
-        QMessageBox messageBox;
-        messageBox.information(0,"Záznam","Záznam byl vložen.");
-    }
-    else
-    {
-        qDebug() << "Error inserting image into table:\n" << query.lastError();
-    }
-
-
-    //sqlDatabase.Dissconect();
-}
-*/
 //Tlačítko pro vybrání obrázku a zobrazení náhledu
 void InsertWindow::bookletButtonClicked()
 {
@@ -139,7 +74,6 @@ void InsertWindow::buttonBoxAccepted()
         qDebug() << items.at(i) << Qt::endl;
     }
     //Převod z labelu na obrázek a uložení do DB
-    //ZDE MUSÍ BÝT JEŠTĚ OŠTĚŘENÍ ZDA UŽIVATEL VŮBEC NAHRÁL OBRÁZEK!
     QPixmap inPixmap = ui->bookletLabel->pixmap();
     QPixmap afterScaled = inPixmap.scaled(QSize(80, 80),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     QByteArray arr;

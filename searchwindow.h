@@ -1,6 +1,7 @@
 #ifndef SEARCHWINDOW_H
 #define SEARCHWINDOW_H
 
+#include "record.h"
 #include <QDialog>
 
 namespace Ui {
@@ -14,11 +15,14 @@ class SearchWindow : public QDialog
 public:
     explicit SearchWindow(QWidget *parent = nullptr);
     ~SearchWindow();
-
+    Record record() const {return pRecord;}
 private slots:
-    void searchButtonClicked();
+    void buttonBoxAccepted();
+    void buttonBoxRejected();
+    void buttonBoxRetry();
 private:
     Ui::SearchWindow *ui;
+    Record pRecord;
 };
 
 #endif // SEARCHWINDOW_H
