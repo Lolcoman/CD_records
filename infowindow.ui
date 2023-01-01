@@ -36,7 +36,7 @@
      <item row="0" column="1">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aplikace byla vytvořena v rámci studia na Univerzitě Tomáše Bati ve Zlíně v předmětu Multiplatformní programování.&lt;/p&gt;&lt;p&gt;Jedná se o Databázi CD nahrávek.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Databáze CD nahrávek&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Aplikace byla vytvořena v rámci studia na Univerzitě Tomáše Bati ve Zlíně v předmětu Multiplatformní programování.&lt;/p&gt;&lt;p&gt;Databázi je možné vytvořit a postupně do ní vkládat jednotlivé nahrávky. Následně databázi lze načíst a vyhledávat v ní záznamy podle kritérií.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

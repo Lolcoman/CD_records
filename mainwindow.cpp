@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBox,SIGNAL(currentIndexChanged(int)), SLOT(searchComboBox(int)));
     connect(ui->lineEdit, &QLineEdit::textChanged, this, &::MainWindow::searchLineEdit);
     connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
-    connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
     connect(ui->actionCreateDatabase, &QAction::triggered, this, &MainWindow::actionCreateTriggered);
     connect(ui->actionLoadDatabase, &QAction::triggered, this, &MainWindow::actionLoadTriggered);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::actionCloseTriggered);
@@ -46,7 +45,7 @@ void MainWindow::actionInsertTriggered()
 {
     InsertWindow rec(this);
     if(!sqlDatabase->checkConnection()){
-        QMessageBox::critical(this,"Chyba","Vyberte databázi!");
+        QMessageBox::critical(this,"Chyba","Nejprve vytvořte nebo nahrejte databázi!");
         return;
     }
     if(rec.exec() == QDialog::Rejected){
