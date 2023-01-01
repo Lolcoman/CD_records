@@ -4,8 +4,10 @@
         <file>img/file-circle-plus-solid.svg</file>
         <file>img/magnifying-glass-solid.svg</file>
         <file>img/circle-info-solid.svg</file>
-        <file>img/database-solid.svg</file>
         <file>img/download-solid.svg</file>
         <file>img/folder-open-solid.svg</file>
+        <file>img/utb-ikona400.png</file>
+        <file>img/file-solid.svg</file>
+        <file>img/icon.png</file>
     </qresource>
 </RCC>

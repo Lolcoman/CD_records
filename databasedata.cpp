@@ -52,27 +52,6 @@ bool DatabaseData::insertRecord(const Record &record)
     }
     return success;
 }
-
-bool DatabaseData::searchRecord(const Record &record)
-{
-    QSqlQuery qry;
-    if(!record.Author().isEmpty()){
-
-    }
-    qry.prepare("SELECT * FROM cd_table WHERE Author =?");
-    qry.prepare("SELECT * FROM cd_table WHERE Author,Album,AlbumYear  (?,?,?,?,?,?)");
-    qry.addBindValue(record.Author());
-    qry.addBindValue(record.Album());
-    qry.addBindValue(record.AlbumYear());
-    qry.addBindValue(record.MusicGenre());
-    qry.addBindValue(record.Playlist());
-    qry.addBindValue(record.Booklet());
-    bool success = qry.exec();
-    if(!success){
-        DatabaseError = qry.lastError().text();
-    }
-    return success;
-}
 //Oveření zda byla databáze načtena
 bool DatabaseData::checkConnection()
 {

@@ -11,24 +11,24 @@ CONFIG += c++17
 SOURCES += \
     databasedata.cpp \
     imagedelegate.cpp \
+    infowindow.cpp \
     insertwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    record.cpp \
-    searchwindow.cpp
+    record.cpp
 
 HEADERS += \
     databasedata.h \
     imagedelegate.h \
+    infowindow.h \
     insertwindow.h \
     mainwindow.h \
-    record.h \
-    searchwindow.h
+    record.h
 
 FORMS += \
+    infowindow.ui \
     insertwindow.ui \
-    mainwindow.ui \
-    searchwindow.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

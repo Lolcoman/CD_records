@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "infowindow.h"
 #include "ui_mainwindow.h"
 #include "databasedata.h"
 #include <qsqldatabase.h>
@@ -8,7 +9,6 @@
 #include <QSqlError>
 #include <QRegularExpressionValidator>
 #include <QMessageBox>
-#include "searchwindow.h"
 #include "insertwindow.h"
 #include <QSqlTableModel>
 #include <QStandardItemModel>
@@ -20,53 +20,31 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     sqlDatabase = new DatabaseData(this);
+    proxyModel = new QSortFilterProxyModel(this);
     dataModel = nullptr;
-
     ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->tableView->addActions({ui->actionInsert,ui->actionSearch});
+    ui->tableView->addAction(ui->actionInsert);
 
     ui->statusbar->addPermanentWidget(ui->statusLabel,3);
     setWindowTitle("Databáze CD nahrávek");
     //Action tlačítka a další dialogy
-    connect(ui->actionSearch, &QAction::triggered, this, &MainWindow::actionSearchTriggered);
+    connect(ui->comboBox,SIGNAL(currentIndexChanged(int)), SLOT(searchComboBox(int)));
+    connect(ui->lineEdit, &QLineEdit::textChanged, this, &::MainWindow::searchLineEdit);
+    connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
     connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
     connect(ui->actionCreateDatabase, &QAction::triggered, this, &MainWindow::actionCreateTriggered);
     connect(ui->actionLoadDatabase, &QAction::triggered, this, &MainWindow::actionLoadTriggered);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::actionCloseTriggered);
+    connect(ui->actionInfo, &QAction::triggered, this, &MainWindow::actionInfoTriggered);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::actionSearchTriggered()
-{
-    SearchWindow ser(this);
-
-    SearchWindow search;
-//    if(!sqlDatabase->checkConnection()){
-//        QMessageBox::critical(this,"Chyba","Vyberte databázi!");
-//        return;
-//    }
-    if(ser.exec() == QDialog::Rejected){
-        return;
-    }
-    if(!sqlDatabase->insertRecord(ser.record())){
-        QMessageBox::critical(this,"Chyba",sqlDatabase->getError()+"\nVyberte databázi!");
-        return;
-    }
-    if(dataModel){
-        dataModel->select();
-    }
-}
-
 void MainWindow::actionInsertTriggered()
 {
-    //InsertWindow insert;
     InsertWindow rec(this);
-    //insert.setModal(true);
-    //insert.exec();
     if(!sqlDatabase->checkConnection()){
         QMessageBox::critical(this,"Chyba","Vyberte databázi!");
         return;
@@ -76,7 +54,7 @@ void MainWindow::actionInsertTriggered()
     }
     //Podmínka zda došlo k vložení záznamu do databáze
     if(!sqlDatabase->insertRecord(rec.record())){
-        QMessageBox::critical(this,"Chyba",sqlDatabase->getError()+"\nVyberte databázi!");
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError());
         return;
     }
     if(dataModel){
@@ -131,24 +109,51 @@ void MainWindow::createDatabase(Database database)
     dataModel->setHeaderData(3, Qt::Horizontal, tr("Žánr"));
     dataModel->setHeaderData(4, Qt::Horizontal, tr("Playlist"));
     dataModel->setHeaderData(5, Qt::Horizontal, tr("Obal CD"));
-    //qDebug()<<dataModel->index(0,5).data().toByteArray();
 
     QByteArray img = dataModel->index(0,5).data().toByteArray();
     QPixmap outPixmap = QPixmap();
     outPixmap.loadFromData( img );
-    //dataModel->(0, 0, outPixmap);
-    //qDebug()<<img;
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
 
-
-    ui->tableView->setModel(dataModel);
     ui->tableView->setItemDelegateForColumn(5,pImageDelegate);
-    //ui->tableView->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
+
+    proxyModel->setSourceModel(dataModel);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->comboBox->addItems(QStringList()<<"Autor"<<"Rok vydání alba"<<"Žánr");
+    ui->lineEdit->setReadOnly(false);
+    ui->tableView->setModel(proxyModel);
 }
 
 void MainWindow::actionCloseTriggered()
 {
     close();
+}
+
+void MainWindow::searchLineEdit(const QString &arg1)
+{
+    proxyModel->setFilterFixedString(arg1);
+}
+
+void MainWindow::searchComboBox(int index)
+{
+    switch (index) {
+    case 1:
+        index = 2;
+        break;
+    case 2:
+        index = 3;
+    default:
+        break;
+    }
+    proxyModel->setFilterKeyColumn(index);
+}
+
+void MainWindow::actionInfoTriggered()
+{
+    InfoWindow infoWindow;
+    infoWindow.setModal(true);
+    infoWindow.exec();
 }
 
