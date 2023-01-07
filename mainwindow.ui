@@ -180,7 +180,10 @@
      <normaloff>:/rec/img/circle-xmark-solid.svg</normaloff>:/rec/img/circle-xmark-solid.svg</iconset>
    </property>
    <property name="text">
-    <string>Zavřit</string>
+    <string>Zavřít</string>
+   </property>
+   <property name="toolTip">
+    <string>Zavřít</string>
    </property>
   </action>
   <action name="actionCreateDatabase">

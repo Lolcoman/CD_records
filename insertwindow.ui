@@ -104,7 +104,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Musí být číslo a platný rok</string>
+          <string>Zadejte validní rok</string>
          </property>
          <property name="inputMethodHints">
           <set>Qt::ImhNone</set>
