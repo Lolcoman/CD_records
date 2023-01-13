@@ -143,11 +143,14 @@ void MainWindow::searchLineEdit(const QString &arg1)
 void MainWindow::searchComboBox(int index)
 {
     switch (index) {
+    case 0:
+        index = 1;
+        break;
     case 1:
-        index = 2;
+        index = 3;
         break;
     case 2:
-        index = 3;
+        index = 4;
     default:
         break;
     }
