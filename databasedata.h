@@ -15,6 +15,8 @@ public:
     bool initDatabase(const QString &database);
     bool configDatabase();
     bool insertRecord(const Record &record);
+    bool deleteRecord(int id);
+    bool updateRecord(const Record &record, int id);
     bool checkConnection();
     QString getError() const {return DatabaseError;}
 private:

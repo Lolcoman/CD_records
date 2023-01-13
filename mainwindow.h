@@ -31,6 +31,8 @@ private slots:
     void actionLoadTriggered();
     void actionCloseTriggered();
     void actionInfoTriggered();
+    void actionDeleteTriggered();
+    void actionUpdateTriggered();
     void searchLineEdit(const QString &arg1);
     void searchComboBox(int index);
 private:

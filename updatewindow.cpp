@@ -1,5 +1,5 @@
-#include "insertwindow.h"
-#include "ui_insertwindow.h"
+#include "updatewindow.h"
+#include "ui_updatewindow.h"
 #include <QRegularExpressionValidator>
 #include <QMessageBox>
 #include <qsqldatabase.h>
@@ -8,17 +8,18 @@
 #include <QBuffer>
 #include <QSqlError>
 
-InsertWindow::InsertWindow(QWidget *parent) :
+
+updatewindow::updatewindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::InsertWindow)
+    ui(new Ui::updatewindow)
 {
     ui->setupUi(this);
-    setWindowTitle("Přidání CD nahrávky");
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Přidat");
+    setWindowTitle("Úprava CD nahrávky");
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Změnit");
     ui->buttonBox->button(QDialogButtonBox::Retry)->setText("Znovu");
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("Zrušit");
     //Normální tlačíka
-    connect(ui->bookletButton, &QPushButton::clicked, this, &InsertWindow::bookletButtonClicked);
+    connect(ui->bookletButton, &QPushButton::clicked, this, &updatewindow::bookletButtonClicked);
     //ButtoBox dialog tlačíka
     connect(ui->buttonBox->button(QDialogButtonBox::Ok),SIGNAL(clicked(bool)), this, SLOT(buttonBoxAccepted()));
     connect(ui->buttonBox->button(QDialogButtonBox::Retry),SIGNAL(clicked(bool)), this, SLOT(buttonBoxRetry()));
@@ -29,13 +30,12 @@ InsertWindow::InsertWindow(QWidget *parent) :
     ui->yearLineEdit->setValidator(validator);
 }
 
-InsertWindow::~InsertWindow()
+updatewindow::~updatewindow()
 {
     delete ui;
 }
-
 //Tlačítko pro vybrání obrázku a zobrazení náhledu
-void InsertWindow::bookletButtonClicked()
+void updatewindow::bookletButtonClicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,tr("Vyberte obrázek"),"",tr("Obrázky (*.png *.jpg *.jpeg *.bmp)"));
     if(filename.isEmpty()){
@@ -50,7 +50,7 @@ void InsertWindow::bookletButtonClicked()
 
 }
 //Tlačítko pro přidání záznamu
-void InsertWindow::buttonBoxAccepted()
+void updatewindow::buttonBoxAccepted()
 {
     QString author = ui->autorLineEdit->text();
     QString album = ui->albumLineEdit->text();
@@ -70,6 +70,9 @@ void InsertWindow::buttonBoxAccepted()
         messageBox.critical(0,"Chyba","Vyplňte všecha pole !");
         return;
     }
+    for(int i=0 ; i < items.length() ; i++){
+        qDebug() << items.at(i) << Qt::endl;
+    }
     //Převod z labelu na obrázek a uložení do DB
     QPixmap inPixmap = ui->bookletLabel->pixmap();
     QPixmap afterScaled = inPixmap.scaled(QSize(80, 80),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
@@ -83,7 +86,7 @@ void InsertWindow::buttonBoxAccepted()
 }
 
 
-void InsertWindow::buttonBoxRetry()
+void updatewindow::buttonBoxRetry()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Znovu", "Opravdu chcete všechna pole vymazat?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
@@ -100,7 +103,7 @@ void InsertWindow::buttonBoxRetry()
     }
     //reject();
 }
-void InsertWindow::buttonBoxRejected()
+void updatewindow::buttonBoxRejected()
 {
     reject();
 }

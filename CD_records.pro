@@ -15,7 +15,8 @@ SOURCES += \
     insertwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    record.cpp
+    record.cpp \
+    updatewindow.cpp
 
 HEADERS += \
     databasedata.h \
@@ -23,12 +24,14 @@ HEADERS += \
     infowindow.h \
     insertwindow.h \
     mainwindow.h \
-    record.h
+    record.h \
+    updatewindow.h
 
 FORMS += \
     infowindow.ui \
     insertwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    updatewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

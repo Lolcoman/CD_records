@@ -4,7 +4,8 @@
 
 #define CREATE_TABLE \
     "CREATE TABLE IF NOT EXISTS cd_table"\
-    "(Author TEXT"\
+    "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL"\
+    ",Author TEXT"\
     ",Album TEXT"\
     ",AlbumYear INT"\
     ",MusicGenre TEXT"\
@@ -46,6 +47,36 @@ bool DatabaseData::insertRecord(const Record &record)
     qry.addBindValue(record.MusicGenre());
     qry.addBindValue(record.Playlist());
     qry.addBindValue(record.Booklet());
+    bool success = qry.exec();
+    if(!success){
+        DatabaseError = qry.lastError().text();
+    }
+    return success;
+}
+
+bool DatabaseData::deleteRecord(int id)
+{
+    QSqlQuery qry;
+    //qry.prepare("DELETE FROM cd_table WHERE ID = %1");
+    //qry.addBindValue(id);
+    bool success = qry.exec(QString("DELETE FROM cd_table WHERE ID = %1").arg(id));
+    if(!success){
+        DatabaseError = qry.lastError().text();
+    }
+    return success;
+}
+
+bool DatabaseData::updateRecord(const Record &record, int id)
+{
+    QSqlQuery qry;
+    qry.prepare("UPDATE cd_table SET Author=:author,Album=:album,AlbumYear=:albumyear,MusicGenre=:musicgenre,Playlist=:playlist,Booklet=:booklet WHERE ID=:id");
+    qry.bindValue(":author",record.Author());
+    qry.bindValue(":album",record.Album());
+    qry.bindValue(":albumyear",record.AlbumYear());
+    qry.bindValue(":musicgenre",record.MusicGenre());
+    qry.bindValue(":playlist",record.Playlist());
+    qry.bindValue(":booklet",record.Booklet());
+    qry.bindValue(":id",id);
     bool success = qry.exec();
     if(!success){
         DatabaseError = qry.lastError().text();

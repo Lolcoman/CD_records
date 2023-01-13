@@ -127,6 +127,8 @@
      <string>Nahrávka</string>
     </property>
     <addaction name="actionInsert"/>
+    <addaction name="actionDelete"/>
+    <addaction name="actionUpdate"/>
    </widget>
    <widget class="QMenu" name="menuProgram">
     <property name="title">
@@ -202,6 +204,30 @@
    </property>
    <property name="text">
     <string>Nahrát databázi</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/trash-solid.svg</normaloff>:/rec/img/trash-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Smazat</string>
+   </property>
+   <property name="toolTip">
+    <string>Smazat záznam</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/rec/img/rotate-right-solid.svg</normaloff>:/rec/img/rotate-right-solid.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Upravit</string>
+   </property>
+   <property name="toolTip">
+    <string>Upravit Záznam</string>
    </property>
   </action>
  </widget>

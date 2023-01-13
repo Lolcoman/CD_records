@@ -9,5 +9,7 @@
         <file>img/utb-ikona400.png</file>
         <file>img/file-solid.svg</file>
         <file>img/icon.png</file>
+        <file>img/trash-solid.svg</file>
+        <file>img/rotate-right-solid.svg</file>
     </qresource>
 </RCC>

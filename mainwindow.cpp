@@ -13,6 +13,8 @@
 #include <QSqlTableModel>
 #include <QStandardItemModel>
 #include "imagedelegate.h"
+#include "updatewindow.h"
+#include <QSqlQuery>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     proxyModel = new QSortFilterProxyModel(this);
     dataModel = nullptr;
     ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->tableView->addAction(ui->actionInsert);
+    ui->tableView->addActions({ui->actionInsert,ui->actionDelete,ui->actionUpdate});
 
     ui->statusbar->addPermanentWidget(ui->statusLabel,3);
     setWindowTitle("Databáze CD nahrávek");
@@ -31,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBox,SIGNAL(currentIndexChanged(int)), SLOT(searchComboBox(int)));
     connect(ui->lineEdit, &QLineEdit::textChanged, this, &::MainWindow::searchLineEdit);
     connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::actionInsertTriggered);
+    connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::actionDeleteTriggered);
+    connect(ui->actionUpdate, &QAction::triggered, this, &MainWindow::actionUpdateTriggered);
     connect(ui->actionCreateDatabase, &QAction::triggered, this, &MainWindow::actionCreateTriggered);
     connect(ui->actionLoadDatabase, &QAction::triggered, this, &MainWindow::actionLoadTriggered);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::actionCloseTriggered);
@@ -102,20 +106,21 @@ void MainWindow::createDatabase(Database database)
     dataModel->setTable("cd_table"); //název tabulky
     dataModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     dataModel->select();
-    dataModel->setHeaderData(0, Qt::Horizontal, tr("Autor"));
-    dataModel->setHeaderData(1, Qt::Horizontal, tr("Album"));
-    dataModel->setHeaderData(2, Qt::Horizontal, tr("Rok vydání alba"));
-    dataModel->setHeaderData(3, Qt::Horizontal, tr("Žánr"));
-    dataModel->setHeaderData(4, Qt::Horizontal, tr("Playlist"));
-    dataModel->setHeaderData(5, Qt::Horizontal, tr("Obal CD"));
+    dataModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+    dataModel->setHeaderData(1, Qt::Horizontal, tr("Autor"));
+    dataModel->setHeaderData(2, Qt::Horizontal, tr("Album"));
+    dataModel->setHeaderData(3, Qt::Horizontal, tr("Rok vydání alba"));
+    dataModel->setHeaderData(4, Qt::Horizontal, tr("Žánr"));
+    dataModel->setHeaderData(5, Qt::Horizontal, tr("Playlist"));
+    dataModel->setHeaderData(6, Qt::Horizontal, tr("Obal CD"));
 
-    QByteArray img = dataModel->index(0,5).data().toByteArray();
+    QByteArray img = dataModel->index(0,6).data().toByteArray();
     QPixmap outPixmap = QPixmap();
     outPixmap.loadFromData( img );
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
 
-    ui->tableView->setItemDelegateForColumn(5,pImageDelegate);
+    ui->tableView->setItemDelegateForColumn(6,pImageDelegate);
 
     proxyModel->setSourceModel(dataModel);
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -154,5 +159,53 @@ void MainWindow::actionInfoTriggered()
     InfoWindow infoWindow;
     infoWindow.setModal(true);
     infoWindow.exec();
+}
+
+
+void MainWindow::actionDeleteTriggered()
+{
+    if(!sqlDatabase->checkConnection()){
+        QMessageBox::critical(this,"Chyba","Nejprve vytvořte nebo nahrejte databázi!");
+        return;
+    }
+    const int id = ui->tableView->currentIndex().row();
+    QVariant selectedId = dataModel->data(dataModel->index(id,0));
+    //qDebug("ID:%i ", selectedId.toInt());
+    if(selectedId.toInt()== 0){
+        QMessageBox::critical(this,"Chyba","Nebyl vybrán žádný záznám!");
+        return;
+    }
+    //Podmínka zda došlo k vložení záznamu do databáze
+    if(!sqlDatabase->deleteRecord(selectedId.toInt())){
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError());
+        return;
+    }
+    if(dataModel){
+        dataModel->select();
+        proxyModel->setSourceModel(dataModel);;
+        ui->tableView->setModel(proxyModel);
+    }
+}
+
+void MainWindow::actionUpdateTriggered()
+{
+    updatewindow rec(this);
+    if(!sqlDatabase->checkConnection()){
+        QMessageBox::critical(this,"Chyba","Nejprve vytvořte nebo nahrejte databázi!");
+        return;
+    }
+    if(rec.exec() == QDialog::Rejected){
+        return;
+    }
+    const int id = ui->tableView->currentIndex().row();
+    QVariant selectedId = dataModel->data(dataModel->index(id,0));
+    //Podmínka zda došlo k vložení záznamu do databáze
+    if(!sqlDatabase->updateRecord(rec.record(),selectedId.toInt())){
+        QMessageBox::critical(this,"Chyba",sqlDatabase->getError());
+        return;
+    }
+    if(dataModel){
+        dataModel->select();
+    }
 }
 
